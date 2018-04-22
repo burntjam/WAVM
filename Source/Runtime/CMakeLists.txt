@@ -23,7 +23,7 @@ include_directories(${WAVM_INCLUDE_DIR}/Runtime)
 WAVM_ADD_LIBRARY(Runtime ${Sources} ${PublicHeaders})
 
 # Find an installed build of LLVM
-find_package(LLVM 6.0 REQUIRED CONFIG)
+find_package(LLVM 6.0 REQUIRED CONFIG PATHS ${LLVM_DIR})
 
 # Include the LLVM headers
 include_directories(${LLVM_INCLUDE_DIRS})
@@ -37,4 +37,5 @@ add_definitions("\"-DLLVM_TARGET_ATTRIBUTES=${LLVM_TARGET_ATTRIBUTES_ESCAPED}\""
 
 # Link against the LLVM libraries
 llvm_map_components_to_libnames(LLVM_LIBS support core passes mcjit native DebugInfoDWARF)
+message("The LLVM_LIBS are ${LLVM_LIBS}")
 target_link_libraries(Runtime Platform Logging IR ${LLVM_LIBS})
